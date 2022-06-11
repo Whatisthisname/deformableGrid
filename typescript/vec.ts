@@ -38,6 +38,10 @@ class vec {
         return new vec(this.x * scalar, this.y * scalar)
     }
 
+    scale_e(elementwise : vec) {
+        return new vec(this.x * elementwise.x, this.y * elementwise.y)
+    }
+
     lerp (vec1 : vec, t : number = 0) {
         return this.scale(1-t).add(vec1.scale(t))
     }
@@ -70,6 +74,17 @@ class vec {
         return this;
     }
 
+    copyTo(vec1: vec) {
+        vec1.x = this.x
+        vec1.y = this.y
+    }
+
+    static fromRadians(rad : number) {
+        return new vec(Math.cos(rad), Math.sin(rad))
+    }
+    toRadians() : number {
+        return Math.atan2(this.y, this.x)
+    }
 }
 
 

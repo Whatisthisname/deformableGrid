@@ -5,24 +5,23 @@
     <meta charset='UTF-8'>
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <meta name='viewport' content='width=device-width, initial-scale=1.0'>
-    <title>AwesomeProject</title>
+    <title>Flowfield</title>
     <!-- <link rel='stylesheet' href='theoIndex.css'> -->
     <script src='https://cdnjs.cloudflare.com/ajax/libs/d3/7.2.0/d3.min.js'></script>
     <script src='https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js'></script>
-    <script src='compiled/vec.js'></script>
-    <script src='compiled/canvasHelper.js'></script>
+    <script src='js/vec.js'></script>
+    <script src='js/canvasHelper.js'></script>
+    <script src='js/flowfield.js'></script>
 </head>
 
 <body>
-    <p>welcome to my new awesome project :)</p>
     <div id="root">
-        <div id="tooltip" style="visibility: hidden; ">
-            <div class="frame">
-                <button id="boomButton">Boom!</button>
-            </div>
-        </div>
-        <canvas id="canvas" width="800" height="300" style="position: absolute; left: 0; top: 0;"></canvas>
+        <input type="range" id="points" min="0" max="20" value="0" step="1">
+        <!-- <button type="button" id="spawnPoints" onclick="resetPoints()"> </button> -->
+        <!-- <button type="button" id="spawnPoints" onclick="clearCanvas()"> Clear Trails </button> -->
+        <canvas id="canvas" width="800" height="300" style="position: relative; left: 0; top: 500; visibility: visible;" ></canvas>
     </div>
 </body>
-<script src='compiled/main.js'></script>
+<script src='js/main.js'></script>
+
 </html>

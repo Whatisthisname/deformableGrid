@@ -29,6 +29,9 @@ class vec {
     scale(scalar) {
         return new vec(this.x * scalar, this.y * scalar);
     }
+    scale_e(elementwise) {
+        return new vec(this.x * elementwise.x, this.y * elementwise.y);
+    }
     lerp(vec1, t = 0) {
         return this.scale(1 - t).add(vec1.scale(t));
     }
@@ -54,6 +57,16 @@ class vec {
         this.x *= 1.0 / length;
         this.y *= 1.0 / length;
         return this;
+    }
+    copyTo(vec1) {
+        vec1.x = this.x;
+        vec1.y = this.y;
+    }
+    static fromRadians(rad) {
+        return new vec(Math.cos(rad), Math.sin(rad));
+    }
+    toRadians() {
+        return Math.atan2(this.y, this.x);
     }
 }
 function shuffle(array) {
