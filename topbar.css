@@ -18,3 +18,12 @@ button {
     height: 100%;
     vertical-align: top;
 }
+
+#points {
+    width: 500px;
+}
+
+input {
+    accent-color: rgb(134, 29, 29);
+
+}
