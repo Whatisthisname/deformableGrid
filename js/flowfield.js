@@ -58,38 +58,44 @@ class FlowField {
         if (y < 0 || this.height - 1 < y) {
             y = Math.min(this.height - 1, Math.max(0, y));
         }
-        let floorX = Math.floor(x);
-        let floorY = Math.floor(y);
-        // get 4 neighbouring values
-        let topLeft = this.field[floorX][floorY];
-        let topRight = 0;
-        if (floorX != this.width - 1) {
-            topRight = this.field[floorX + 1][floorY];
-        }
-        else
-            topRight = topLeft;
-        let botLeft = 0;
-        if (floorY != this.height - 1) {
-            topRight = this.field[floorX][floorY + 1];
-        }
-        else
-            botLeft = topLeft;
-        let botRight = 0;
-        if (floorY != this.height - 1 && floorX != this.width - 1) {
-            botRight = this.field[floorX + 1][floorY + 1];
-        }
-        else
-            botRight = (botLeft + topRight) / 2;
-        // interpolate between them
-        function frac(n) {
-            return n - Math.floor(n);
-        }
-        let topRow = vec.fromRadians(topLeft).lerp(vec.fromRadians(topRight), frac(x));
-        let botRow = vec.fromRadians(botLeft).lerp(vec.fromRadians(botRight), frac(x));
-        ctx.beginPath();
-        ctx.rect(floorX * drawScale, floorY * drawScale, drawScale, drawScale);
-        ctx.closePath();
-        ctx.stroke();
-        return topRow.lerp(botRow, frac(y)).toRadians();
+        // bicubic interpolation
+        let x1 = Math.floor(x);
+        let x2 = Math.ceil(x);
+        let y1 = Math.floor(y);
+        let y2 = Math.ceil(y);
+        let x1y1 = this.field[x1][y1];
+        let x1y2 = this.field[x1][y2];
+        let x2y1 = this.field[x2][y1];
+        let x2y2 = this.field[x2][y2];
+        let x1y1_x = x1y1 + (x2y1 - x1y1) * (x - x1);
+        let x1y2_x = x1y2 + (x2y2 - x1y2) * (x - x1);
+        return x1y1_x + (x1y2_x - x1y1_x) * (y - y1);
+        // let floorX = Math.floor(x)
+        // let floorY = Math.floor(y)
+        // // get 4 neighbouring values
+        // let topLeft = this.field[floorX][floorY]
+        // let topRight = 0
+        // if (floorX != this.width - 1) {
+        //     topRight = this.field[floorX + 1][floorY]
+        // } else topRight = topLeft
+        // let botLeft = 0
+        // if (floorY != this.height - 1) {
+        //     topRight = this.field[floorX][floorY + 1]
+        // } else botLeft = topLeft
+        // let botRight = 0
+        // if (floorY != this.height - 1 && floorX != this.width - 1) {
+        //     botRight = this.field[floorX + 1][floorY + 1]
+        // } else botRight = (botLeft + topRight) / 2
+        // // interpolate between them
+        // function frac(n: number): number {
+        //     return n - Math.floor(n)
+        // }
+        // let topRow = vec.fromRadians(topLeft).lerp(vec.fromRadians(topRight), frac(x))
+        // let botRow = vec.fromRadians(botLeft).lerp(vec.fromRadians(botRight), frac(x))
+        // ctx.beginPath()
+        // ctx.rect(floorX * canvas.width / this.width, floorY * canvas.height / this.height, canvas.width/this.width, canvas.height/this.height)
+        // ctx.closePath()
+        // ctx.stroke()
+        // return topRow.lerp(botRow, frac(y)).toRadians()
     }
 }

@@ -76,8 +76,8 @@ function drawField() {
     for (let i = 0; i < field.width; i++) {
         for (let j = 0; j < field.height; j++) {
             let start = new vec((i+0.5)*canvas.width/field.width, (j+0.5)*canvas.height/field.height)
-            line(start, start.add(vec.fromRadians(field.field[i][j]).scale(drawScale * 0.7)))
-            circ(start, drawScale * 0.1)
+            line(start, start.add(vec.fromRadians(field.field[i][j]).scale(drawScale * 2)))
+            circ(start, drawScale * 0.5)
             // circ(start, drawScale * field.field[i][j] * 0.1)
             // ctx.fillStyle = "#00ff00"//"#" + Math.round(field.field[i][j]).toString() + "f0000"
             // let scaleFactor = field.field[i][j] / (2*Math.PI)
@@ -90,7 +90,7 @@ function updatePoints() {
     for (let i = 0; i < n_points; i++) {
         points[i].copyTo(lastPoints[i])
         let point_to_field = new vec(points[i].x * field.width / canvas.width, points[i].y * field.height / canvas.height)
-        let sample = field.sample(point_to_field.add(new vec(0.5, 0.5)))
+        let sample = field.sampleInterpolated(point_to_field.sub(new vec(0.5, 0.5)))
         points[i]._add(vec.fromRadians(sample).scale(3))
     }
 }
