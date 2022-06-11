@@ -1,0 +1,20 @@
+#topbar {
+    width: 100%;
+    display: inline-block;
+    text-align: center;
+}
+
+/* input, button {
+    /* border-radius: 3px; */
+    /* padding: 3px; */
+    /* width: 100%; */
+    /* margin: auto; */
+    vertical-align: top;
+    /* position: relative; */
+} */
+
+button {
+    width: 500px;
+    height: 100%;
+    vertical-align: top;
+}

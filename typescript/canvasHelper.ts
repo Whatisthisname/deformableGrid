@@ -20,5 +20,3 @@ function circ(center: vec, rad: number, start : number = 0, end : number = 2 * M
 }
 
 
-
-

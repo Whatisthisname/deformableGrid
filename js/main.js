@@ -3,16 +3,17 @@
 document.body.style.overflow = "hidden";
 var canvas = document.getElementById("canvas");
 var ctx = canvas.getContext("2d");
-var slider = document.getElementById("points");
-let fieldSize = new vec(10, 5);
+let fieldSize = new vec(200, 100);
 let canvasSize = new vec(canvas.width, canvas.height);
-slider.oninput = (e) => {
-    field = new FlowField(fieldSize.x, fieldSize.y);
-    field.smooth(parseInt(slider.value));
-    clearCanvas();
-    drawField();
-};
+assignInputs();
+let n_points = parseInt(pointAmountSlider.value);
+let lifetime = Math.round(Math.sqrt(parseInt(lifeTimeSlider.value)));
+let stepsize = Math.sqrt(parseFloat(stepsizeSlider.value));
+let smoothing = parseFloat(smoothingSlider.value) * Math.min(fieldSize.x, 10);
 let field = new FlowField(fieldSize.x, fieldSize.y);
+let noisePower = 0.1;
+field.smooth(smoothing);
+field.smooth(smoothing);
 window.onresize = () => {
     shapeCanvasToWindow();
 };
@@ -24,14 +25,10 @@ window.onmousemove = (e) => {
 let lastMouse = new vec(0, 0);
 let points = [];
 let lastPoints = [];
-let n_points = 400;
 let drawScale = 20;
 let frame = 0;
 function update(t) {
-    // line(lastMouse, mouse)
-    // mouse.copyTo(lastMouse)
-    // console.log(field.sampleInterpolated(mouse.scale(1/30)))
-    if (frame++ % 30 == 0) {
+    if (frame++ % lifetime == 0) {
         resetPoints();
     }
     updatePoints();
@@ -41,13 +38,14 @@ function update(t) {
 function start() {
     ctx.lineWidth = 0.1;
     shapeCanvasToWindow();
-    drawField();
+    // drawField()
     resetPoints();
 }
 function clearCanvas() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 }
 function resetPoints() {
+    frame = 1;
     for (let i = 0; i < n_points; i++) {
         points[i] = new vec(Math.random() * canvas.width, Math.random() * canvas.height);
         lastPoints[i] = new vec(0, 0);
@@ -73,17 +71,18 @@ function updatePoints() {
         points[i].copyTo(lastPoints[i]);
         let point_to_field = new vec(points[i].x * field.width / canvas.width, points[i].y * field.height / canvas.height);
         let sample = field.sampleInterpolated(point_to_field.sub(new vec(0.5, 0.5)));
-        points[i]._add(vec.fromRadians(sample).scale(3));
+        points[i]._add(vec.fromRadians(sample).scale(stepsize).add(vec.fromRadians(Math.random() * 2 * Math.PI).scale(gaussianRand() * noisePower)));
     }
 }
 function drawPoints(t) {
-    ctx.strokeStyle = rgb(t % 255, (t + 201) % 255, (t + 103) % 255);
+    ctx.strokeStyle = rgba(t % 255, (t) % 255, (t) % 255, (frame / lifetime) * (1 - frame / lifetime) * 4);
     for (let i = 0; i < n_points; i++) {
         line(points[i], lastPoints[i]);
     }
 }
-function rgb(r, g, b) {
-    return ["rgb(", r, ",", g, ",", b, ")"].join("");
+function rgba(r, g, b, a = 1) {
+    return ["rgba(", r, ",", g, ",", b, ",", a, ")"].join("");
 }
+handleInputs();
 start();
 update(0);

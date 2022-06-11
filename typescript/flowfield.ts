@@ -19,6 +19,7 @@ class FlowField {
     }
 
     smooth(neighbours: number) {
+        neighbours = Math.round(neighbours)
         let temp: number[][] = []
         for (let i = 0; i < this.width; i++) {
             temp[i] = []

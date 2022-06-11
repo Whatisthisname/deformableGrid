@@ -6,20 +6,47 @@
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <meta name='viewport' content='width=device-width, initial-scale=1.0'>
     <title>Flowfield</title>
-    <!-- <link rel='stylesheet' href='theoIndex.css'> -->
+    <link rel='stylesheet' href='tooltips.css'>
+    <link rel='stylesheet' href='canvas.css'>
+    <link rel='stylesheet' href='topbar.css'>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/d3/7.2.0/d3.min.js'></script>
     <script src='https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js'></script>
     <script src='js/vec.js'></script>
     <script src='js/canvasHelper.js'></script>
+    <script src='js/math_helpers.js'></script>
     <script src='js/flowfield.js'></script>
+    <script src='js/inputs.js'></script>
 </head>
 
 <body>
     <div id="root">
-        <input type="range" id="points" min="0" max="20" value="0" step="1">
-        <!-- <button type="button" id="spawnPoints" onclick="resetPoints()"> </button> -->
-        <!-- <button type="button" id="spawnPoints" onclick="clearCanvas()"> Clear Trails </button> -->
-        <canvas id="canvas" width="800" height="300" style="position: relative; left: 0; top: 500; visibility: visible;" ></canvas>
+        <div id="topbar">
+            <div class ="tooltip">
+                <button type="button" id="spawnPoints" onclick="clearCanvas()">&nbsp</button>
+                <span class="tooltiptext">Clear</span>
+            </div>
+            <div class ="tooltip">
+                <input type="range" id="smoothing" min="0" max="1" value="0.4" step=".01">
+                <span class="tooltiptext">Amount of grid-smoothing</span>
+            </div>
+            <div class ="tooltip">
+                <input type="range" id="points" min="1" max="100" value="400" step="1">
+                <span class="tooltiptext">Amount of points</span>
+            </div>
+            <div class ="tooltip">
+                <input type="range" id="lifetime" min="4" max="50000" value="2500" step="1">
+                <span class="tooltiptext">Amount of frames lines are alive </span>
+            </div>
+            <div class ="tooltip">
+                <input type="range" id="stepsize" min="4" max="100" value="4" step="1">
+                <span class="tooltiptext">Length of step per update</span>
+            </div>
+            <div class ="tooltip">
+                <input type="range" id="noise" min="0" max="10" value="0.1" step=".01">
+                <span class="tooltiptext">Noise influence per step</span>
+            </div>
+        </div>
+        <canvas id="canvas"></canvas>
     </div>
 </body>
 <script src='js/main.js'></script>
