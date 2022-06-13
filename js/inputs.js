@@ -4,12 +4,14 @@ let pointAmountSlider;
 let lifeTimeSlider;
 let stepsizeSlider;
 let noiseSlider;
+let pauseButton;
 let assignInputs = () => {
     smoothingSlider = document.getElementById("smoothing");
     pointAmountSlider = document.getElementById("points");
     lifeTimeSlider = document.getElementById("lifetime");
     stepsizeSlider = document.getElementById("stepsize");
     noiseSlider = document.getElementById("noise");
+    pauseButton = document.getElementById("pauseButton");
 };
 let handleInputs = () => {
     smoothingSlider.oninput = (e) => {
@@ -31,5 +33,11 @@ let handleInputs = () => {
     };
     noiseSlider.oninput = (e) => {
         noisePower = parseFloat(noiseSlider.value);
+    };
+    pauseButton.onclick = (e) => {
+        paused = !paused;
+        if (pauseButton.nextElementSibling != null) {
+            pauseButton.nextElementSibling.textContent = paused ? "Play" : "Pause";
+        }
     };
 };

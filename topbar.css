@@ -9,12 +9,12 @@
     /* padding: 3px; */
     /* width: 100%; */
     /* margin: auto; */
-    vertical-align: top;
+    /* vertical-align: top; */
     /* position: relative; */
-} */
+/* } */
 
 button {
-    width: 500px;
+    width: 20px;
     height: 100%;
     vertical-align: top;
 }
@@ -25,5 +25,11 @@ button {
 
 input {
     accent-color: rgb(134, 29, 29);
+}
 
+#pauseButton {
+    width: fit-content;
+    display: inline-block;
+    height: 100%;
+    vertical-align: top; 
 }

@@ -12,6 +12,7 @@ let stepsize = Math.sqrt(parseFloat(stepsizeSlider.value));
 let smoothing = parseFloat(smoothingSlider.value) * Math.min(fieldSize.x, 10);
 let field = new FlowField(fieldSize.x, fieldSize.y);
 let noisePower = 0.1;
+let paused = false;
 field.smooth(smoothing);
 field.smooth(smoothing);
 window.onresize = () => {
@@ -28,11 +29,13 @@ let lastPoints = [];
 let drawScale = 20;
 let frame = 0;
 function update(t) {
-    if (frame++ % lifetime == 0) {
-        resetPoints();
+    if (!paused) {
+        if (frame++ % lifetime == 0) {
+            resetPoints();
+        }
+        updatePoints();
+        drawPoints(t);
     }
-    updatePoints();
-    drawPoints(t);
     window.requestAnimationFrame(update);
 }
 function start() {

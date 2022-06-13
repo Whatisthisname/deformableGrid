@@ -17,6 +17,7 @@ let stepsize = Math.sqrt(parseFloat(stepsizeSlider.value))
 let smoothing = parseFloat(smoothingSlider.value) * Math.min(fieldSize.x, 10)
 let field = new FlowField(fieldSize.x, fieldSize.y)
 let noisePower = 0.1
+let paused = false
 
 field.smooth(smoothing)
 field.smooth(smoothing)
@@ -44,12 +45,13 @@ let frame : number = 0
 
 
 function update(t: number) {
-
-    if (frame++ % lifetime == 0) {
-        resetPoints()
+    if (!paused) {
+        if (frame++ % lifetime == 0) {
+            resetPoints()
+        }
+        updatePoints()
+        drawPoints(t)
     }
-    updatePoints()
-    drawPoints(t)
     window.requestAnimationFrame(update)
 }
 
