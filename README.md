@@ -1,2 +1,4 @@
-flow field stuff inspired by tyler hobbs
+Flow field stuff inspired by Tyler Hobbs
+
+Screenshot:
 ![/screenshot.png](screenshot.png)
